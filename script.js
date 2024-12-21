@@ -99,31 +99,58 @@ nextButton.addEventListener('click', () => {
     showSlide(currentSlide);
 });
 
-let scene, camera, renderer, cube;
+let scene, camera, renderer, horizontalPart, verticalPart;
 
 function initScene() {
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
     renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('heroCanvas'), alpha: true });
-    renderer.setSize(400, 400);
+    renderer.setSize(600, 600);
 
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: 0x4F46E5, wireframe: true });
-    cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+    // Create the horizontal part of the plus sign
+    const horizontalGeometry = new THREE.BoxGeometry(2, 0.4, 0.4);
+    const material = new THREE.MeshBasicMaterial({ color: 0xE60000 }); // Red color
+    const horizontalPart = new THREE.Mesh(horizontalGeometry, material);
+
+    // Create the vertical part of the plus sign
+    const verticalGeometry = new THREE.BoxGeometry(0.4, 2, 0.4);
+    const verticalPart = new THREE.Mesh(verticalGeometry, material);
+
+    // Position the parts to form a plus sign
+    horizontalPart.position.set(0, 0, 0); // Horizontal bar
+    verticalPart.position.set(0, 0, 0);   // Vertical bar
+
+    // Add parts to the scene
+    scene.add(horizontalPart);
+    scene.add(verticalPart);
 
     camera.position.z = 5;
+    
+    // Make the parts accessible for animation
+    this.horizontalPart = horizontalPart;
+    this.verticalPart = verticalPart;
 }
 
-function animateCube() {
-    requestAnimationFrame(animateCube);
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
+function animatePlusSign() {
+    requestAnimationFrame(animatePlusSign);
+
+    // Apply rotation on all axes for 3D effect
+    this.horizontalPart.rotation.x += 0.01;
+    this.horizontalPart.rotation.y += 0.01;
+    this.horizontalPart.rotation.z += 0.01;
+
+    this.verticalPart.rotation.x += 0.01;
+    this.verticalPart.rotation.y += 0.01;
+    this.verticalPart.rotation.z += 0.01;
+
     renderer.render(scene, camera);
 }
 
 initScene();
-animateCube();
+animatePlusSign();
+
+
+
 
 const subscribeForm = document.getElementById('subscribeForm');
 subscribeForm.addEventListener('submit', (e) => {
