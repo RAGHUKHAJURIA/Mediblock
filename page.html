@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Medicines</title>
+    <style>
+        :root {
+            --primary-blue: #0066cc;
+            --light-blue: #e6f3ff;
+            --border-blue: #cce0ff;
+            --text-dark: #333333;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        header:hover {
+            background-color: #0052a3;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-blue);
+            border-radius: 4px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-header {
+            background-color: var(--light-blue);
+            padding: 1rem;
+            font-weight: bold;
+            border-bottom: 1px solid var(--border-blue);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .section-header:hover {
+            background-color: #cce7ff;
+        }
+
+        .section-content {
+            padding: 1rem;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .info-table th,
+        .info-table td {
+            padding: 0.75rem;
+            border: 1px solid var(--border-blue);
+            transition: background-color 0.3s ease;
+        }
+
+        .info-table th {
+            background-color: var(--light-blue);
+            text-align: left;
+            width: 30%;
+        }
+
+        .info-table tr:hover td {
+            background-color: #f5faff;
+        }
+
+        .navigation {
+            margin-bottom: 1rem;
+        }
+
+        .nav-button {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0.5rem 1rem;
+            margin-right: 0.5rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: transform 0.2s, background-color 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background-color: #0052a3;
+            transform: scale(1.05);
+        }
+
+        @media print {
+            header {
+                background-color: var(--white);
+                color: var(--text-dark);
+            }
+            
+            .navigation {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Your Medicines</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Main Info Section -->
+        <div class="section">
+            <div class="section-header">INFO</div>
+            <div class="section-content">
+                <table class="info-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Details</th>
+                    </tr>
+                    <tr>
+                        <td>Brand Name of Medicine</td>
+                        <td>Paracetamol Injection</td>
+                    </tr>
+                    <tr>
+                        <td>Generic Name</td>
+                        <td>Paracetamol (Acetaminophen)</td>
+                    </tr>
+                    <tr>
+                        <td>Strength/Concentration</td>
+                        <td>500 mg / 100 ml</td>
+                    </tr>
+                    <tr>
+                        <td>Form</td>
+                        <td>Injection (IV/IM)</td>
+                    </tr>
+                    <tr>
+                        <td>Dosage Instructions</td>
+                        <td>Administer 1‐2 doses of 10‐15 mg/kg</td>
+                    </tr>
+                    <tr>
+                        <td>Prescription Status</td>
+                        <td>Prescription Only</td>
+                    </tr>
+                    <tr>
+                        <td>Manufacturer Name and License Number</td>
+                        <td>[Manufacturer Name]<br>License Number: [Number]</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Additional Sections -->
+        <div class="section">
+            <div class="section-header">Manufacturer Info</div>
+            <div class="section-content">
+                <p>Manufacturer details and information</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">Storage and Handling Conditions</div>
+            <div class="section-content">
+                <p>Storage and handling information</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">Shipping & Delivery Information</div>
+            <div class="section-content">
+                <p>Shipping and delivery details</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">Quality Control and Compliance</div>
+            <div class="section-content">
+                <p>Quality control and compliance information</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">Pharmacological Information</div>
+            <div class="section-content">
+                <p>Pharmacological details and information</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                setTimeout(() => {
+                    section.classList.add('visible');
+                }, index * 200); // Staggered fade-in effect
+            });
+        });
+    </script>
+</body>
+</html>
