@@ -1,165 +1,586 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blockchain Medicine Info</title>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css" />
+    
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- new one -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.mishn.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/loaders/GLTFLoader.js"></script>
+
+    <!-- new one -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Medicines</title>
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        background-color: #f9f9f9;
-      }
+        :root {
+            --primary-blue: #0066cc;
+            --light-blue: #e6f3ff;
+            --border-blue: #cce0ff;
+            --text-dark: #333333;
+            --white: #ffffff;
+        }
 
-      .container {
-        text-align: center;
-        margin-bottom: 20px;
-      }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
-      .nav-button {
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        border-radius: 5px;
-        cursor: pointer;
-      }
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
 
-      .nav-button:hover {
-        background-color: #0056b3;
-      }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-      .info-table {
-        width: 80%;
-        margin-top: 20px;
-        border-collapse: collapse;
-        background: white;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      }
+        header {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            transition: background-color 0.3s ease-in-out;
+        }
 
-      .info-table th,
-      .info-table td {
-        border: 1px solid #ddd;
-        padding: 12px;
-        text-align: left;
-      }
+        header:hover {
+            background-color: #0052a3;
+        }
 
-      .info-table th {
-        background-color: #007bff;
-        color: white;
-      }
+        .section {
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-blue);
+            border-radius: 4px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
 
-      .info-table tr:nth-child(even) {
-        background-color: #f2f2f2;
-      }
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-      .info-table tr:hover {
-        background-color: #ddd;
-      }
+        .section-header {
+            background-color: var(--light-blue);
+            padding: 1rem;
+            font-weight: bold;
+            border-bottom: 1px solid var(--border-blue);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .section-header:hover {
+            background-color: #cce7ff;
+        }
+
+        .section-content {
+            padding: 1rem;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .info-table th,
+        .info-table td {
+            padding: 0.75rem;
+            border: 1px solid var(--border-blue);
+            transition: background-color 0.3s ease;
+        }
+
+        .info-table th {
+            background-color: var(--light-blue);
+            text-align: left;
+            width: 30%;
+        }
+
+        .info-table tr:hover td {
+            background-color: #f5faff;
+        }
+
+        .navigation {
+            margin-bottom: 1rem;
+        }
+
+        .nav-button {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0.5rem 1rem;
+            margin-right: 0.5rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: transform 0.2s, background-color 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background-color: #0052a3;
+            transform: scale(1.05);
+        }
+
+        @media print {
+            header {
+                background-color: var(--white);
+                color: var(--text-dark);
+            }
+            
+            .navigation {
+                display: none;
+            }
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
+    <nav
+      id="navbar"
+      class="w-full z-40 bg-black/90 dark:bg-black/90 transition-all duration-300 shadow-md"
+    >
+      <div
+        class="container mx-auto px-4 py-4 flex justify-between items-center"
+      >
+        <div
+          class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400"
+        >
+          Mediblock
+        </div>
+        <div class="hidden md:flex space-x-8 items-center">
+          <a
+            href="index.html"
+            class="text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          >
+            How It Works
+          </a>
+          <a
+            href="index.html"
+            class="text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          >
+            Features
+          </a>
+          <a
+            href="index.html"
+            class="text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          >
+            Benefits
+          </a>
+          <a
+            href="page.html"
+            class="text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          >
+            Transactions
+          </a>
+          <div class="container">
+            <button onclick="connectWallet()" class="nav-button">Connect MetaMask Wallet</button>
+            <p id="walletAddress" style="margin-top: 10px;"></p>
+        </div>        
+          <button id="themeToggle" class="text-gray-800 dark:text-gray-200">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="md:hidden flex items-center">
+          <button
+            id="mobileMenuToggle"
+            class="text-gray-800 dark:text-gray-200"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div
+        id="mobileMenu"
+        class="hidden md:hidden bg-black/90 dark:bg-black/90 shadow-lg rounded-b-lg mt-2"
+      >
+        <a
+          href="#how-it-works"
+          class="block px-4 py-2 text-sm text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >How It Works</a
+        >
+        <a
+          href="#features"
+          class="block px-4 py-2 text-sm text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >Features</a
+        >
+        <a
+          href="#benefits"
+          class="block px-4 py-2 text-sm text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >Benefits</a
+        >
+        <button
+          class="w-full text-left px-4 py-2 text-sm text-blue-600 dark:text-blue-400 font-medium hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          Connect Wallet
+        </button>
+      </div>
+    </nav>
+    <header>
+        <div class="container">
+            <h1>Your Medicines</h1>
+        </div>
+    </header>
+
     <div class="container">
-      <button onclick="connectWallet()" class="nav-button">
-        Connect MetaMask Wallet
-      </button>
-      <p id="walletAddress" style="margin-top: 10px"></p>
+        <!-- Main Info Section -->
+        <div class="section">
+            <div class="section-header">INFO</div>
+            <div class="section-content">
+                <table class="info-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Details</th>
+                    </tr>
+                    <tr>
+                        <td>Brand Name of Medicine</td>
+                        <td>Paracetamol Injection</td>
+                    </tr>
+                    <tr>
+                        <td>Generic Name</td>
+                        <td>Paracetamol (Acetaminophen)</td>
+                    </tr>
+                    <tr>
+                        <td>Strength/Concentration</td>
+                        <td>500 mg / 100 ml</td>
+                    </tr>
+                    <tr>
+                        <td>Form</td>
+                        <td>Injection (IV/IM)</td>
+                    </tr>
+                    <tr>
+                        <td>Dosage Instructions</td>
+                        <td>Administer 1‐2 doses of 10‐15 mg/kg</td>
+                    </tr>
+                    <tr>
+                        <td>Prescription Status</td>
+                        <td>Prescription Only</td>
+                    </tr>
+                    <tr>
+                        <td>Manufacturer Name and License Number</td>
+                        <td>[Manufacturer Name]<br>License Number: [Number]</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Additional Sections -->
+        <div class="section">
+            <div class="section-header">Manufacturer Info</div>
+            <div class="section-content">
+                <table class="info-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Details</th>
+                    </tr>
+                    <tr>
+                        <td>Brand Name of Medicine</td>
+                        <td>Paracetamol Injection</td>
+                    </tr>
+                    <tr>
+                        <td>Generic Name</td>
+                        <td>Paracetamol (Acetaminophen)</td>
+                    </tr>
+                    <tr>
+                        <td>Strength/Concentration</td>
+                        <td>500 mg / 100 ml</td>
+                    </tr>
+                    <tr>
+                        <td>Form</td>
+                        <td>Injection (IV/IM)</td>
+                    </tr>
+                    <tr>
+                        <td>Dosage Instructions</td>
+                        <td>Administer 1‐2 doses of 10‐15 mg/kg</td>
+                    </tr>
+                    <tr>
+                        <td>Prescription Status</td>
+                        <td>Prescription Only</td>
+                    </tr>
+                    <tr>
+                        <td>Manufacturer Name and License Number</td>
+                        <td>[Manufacturer Name]<br>License Number: [Number]</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">Storage and Handling Conditions</div>
+            <div class="section-content">
+                <table class="info-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Details</th>
+                    </tr>
+                    <tr>
+                        <td>Brand Name of Medicine</td>
+                        <td>Paracetamol Injection</td>
+                    </tr>
+                    <tr>
+                        <td>Generic Name</td>
+                        <td>Paracetamol (Acetaminophen)</td>
+                    </tr>
+                    <tr>
+                        <td>Strength/Concentration</td>
+                        <td>500 mg / 100 ml</td>
+                    </tr>
+                    <tr>
+                        <td>Form</td>
+                        <td>Injection (IV/IM)</td>
+                    </tr>
+                    <tr>
+                        <td>Dosage Instructions</td>
+                        <td>Administer 1‐2 doses of 10‐15 mg/kg</td>
+                    </tr>
+                    <tr>
+                        <td>Prescription Status</td>
+                        <td>Prescription Only</td>
+                    </tr>
+                    <tr>
+                        <td>Manufacturer Name and License Number</td>
+                        <td>[Manufacturer Name]<br>License Number: [Number]</td>
+                    </tr>
+                </table>
+            </div>
+
+        <div class="section">
+            <div class="section-content">
+                <table class="info-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Details</th>
+                    </tr>
+                    <tr>
+                        <td>Brand Name of Medicine</td>
+                        <td>Paracetamol Injection</td>
+                    </tr>
+                    <tr>
+                        <td>Generic Name</td>
+                        <td>Paracetamol (Acetaminophen)</td>
+                    </tr>
+                    <tr>
+                        <td>Strength/Concentration</td>
+                        <td>500 mg / 100 ml</td>
+                    </tr>
+                    <tr>
+                        <td>Form</td>
+                        <td>Injection (IV/IM)</td>
+                    </tr>
+                    <tr>
+                        <td>Dosage Instructions</td>
+                        <td>Administer 1‐2 doses of 10‐15 mg/kg</td>
+                    </tr>
+                    <tr>
+                        <td>Prescription Status</td>
+                        <td>Prescription Only</td>
+                    </tr>
+                    <tr>
+                        <td>Manufacturer Name and License Number</td>
+                        <td>[Manufacturer Name]<br>License Number: [Number]</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">Quality Control and Compliance</div>
+            <div class="section-content">
+                <table class="info-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Details</th>
+                    </tr>
+                    <tr>
+                        <td>Brand Name of Medicine</td>
+                        <td>Paracetamol Injection</td>
+                    </tr>
+                    <tr>
+                        <td>Generic Name</td>
+                        <td>Paracetamol (Acetaminophen)</td>
+                    </tr>
+                    <tr>
+                        <td>Strength/Concentration</td>
+                        <td>500 mg / 100 ml</td>
+                    </tr>
+                    <tr>
+                        <td>Form</td>
+                        <td>Injection (IV/IM)</td>
+                    </tr>
+                    <tr>
+                        <td>Dosage Instructions</td>
+                        <td>Administer 1‐2 doses of 10‐15 mg/kg</td>
+                    </tr>
+                    <tr>
+                        <td>Prescription Status</td>
+                        <td>Prescription Only</td>
+                    </tr>
+                    <tr>
+                        <td>Manufacturer Name and License Number</td>
+                        <td>[Manufacturer Name]<br>License Number: [Number]</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">Pharmacological Information</div>
+            <div class="section-content">
+                <table class="info-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Details</th>
+                    </tr>
+                    <tr>
+                        <td>Brand Name of Medicine</td>
+                        <td>Paracetamol Injection</td>
+                    </tr>
+                    <tr>
+                        <td>Generic Name</td>
+                        <td>Paracetamol (Acetaminophen)</td>
+                    </tr>
+                    <tr>
+                        <td>Strength/Concentration</td>
+                        <td>500 mg / 100 ml</td>
+                    </tr>
+                    <tr>
+                        <td>Form</td>
+                        <td>Injection (IV/IM)</td>
+                    </tr>
+                    <tr>
+                        <td>Dosage Instructions</td>
+                        <td>Administer 1‐2 doses of 10‐15 mg/kg</td>
+                    </tr>
+                    <tr>
+                        <td>Prescription Status</td>
+                        <td>Prescription Only</td>
+                    </tr>
+                    <tr>
+                        <td>Manufacturer Name and License Number</td>
+                        <td>[Manufacturer Name]<br>License Number: [Number]</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 
-    <table class="info-table">
-      <tr>
-        <th>Field</th>
-        <th>Details</th>
-      </tr>
-      <tr>
-        <td>Brand Name</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>Generic Name</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>Strength</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>Form</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>Dosage Instructions</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>Prescription Status</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>Manufacturer Info</td>
-        <td></td>
-      </tr>
-    </table>
-
-    <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
     <script>
-      let userAddress;
+        document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.section');
+    sections.forEach((section, index) => {
+        setTimeout(() => {
+            section.classList.add('visible');
+        }, index * 200); // Adds a staggered reveal effect
+    });
 
-      async function connectWallet() {
-        if (typeof window.ethereum !== "undefined") {
-          try {
-            const accounts = await ethereum.request({
-              method: "eth_requestAccounts",
-            });
-            userAddress = accounts[0];
-            document.getElementById(
-              "walletAddress"
-            ).textContent = `Connected: ${userAddress}`;
-            fetchBlockchainData(userAddress);
-          } catch (error) {
-            console.error("Error connecting to MetaMask:", error);
-          }
-        } else {
-          alert(
-            "MetaMask is not installed. Please install it to use this feature."
-          );
-        }
-      }
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
 
-      async function fetchBlockchainData(address) {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const contractAddress = "0xYourSmartContractAddress"; // Replace with your deployed contract address
-        const abi = [
-          "function getMedicineData(address user) view returns (string, string, string, string, string, string, string)",
-        ];
+    mobileMenuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
 
-        const contract = new ethers.Contract(contractAddress, abi, provider);
-        try {
-          const data = await contract.getMedicineData(address);
-
-          // Update the table with data
-          const fields = document.querySelectorAll(
-            ".info-table td:nth-child(2)"
-          );
-          fields[0].textContent = data[0]; // Brand Name
-          fields[1].textContent = data[1]; // Generic Name
-          fields[2].textContent = data[2]; // Strength
-          fields[3].textContent = data[3]; // Form
-          fields[4].textContent = data[4]; // Dosage Instructions
-          fields[5].textContent = data[5]; // Prescription Status
-          fields[6].textContent = data[6]; // Manufacturer Info
-        } catch (error) {
-          console.error("Error fetching data from the blockchain:", error);
-          alert("Could not fetch data from the blockchain.");
-        }
-      }
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+    });
+});
     </script>
-  </body>
+    <script>
+        let userAddress;
+    
+        async function connectWallet() {
+            if (typeof window.ethereum !== "undefined") {
+                try {
+                    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+                    userAddress = accounts[0];
+                    document.getElementById("walletAddress").textContent = `Connected: ${userAddress}`;
+                    fetchBlockchainData(userAddress);
+                } catch (error) {
+                    console.error("Error connecting to MetaMask:", error);
+                }
+            } else {
+                alert("MetaMask is not installed. Please install it to use this feature.");
+            }
+        }
+    
+        async function fetchBlockchainData(address) {
+            // Example: Fetch mock data for now; replace with actual blockchain interaction
+            const mockData = {
+                brandName: "Paracetamol Injection",
+                genericName: "Paracetamol (Acetaminophen)",
+                strength: "500 mg / 100 ml",
+                form: "Injection (IV/IM)",
+                dosageInstructions: "Administer 1‐2 doses of 10‐15 mg/kg",
+                prescriptionStatus: "Prescription Only",
+                manufacturer: "PharmaCorp Ltd",
+                licenseNumber: "XYZ12345"
+            };
+    
+            // Update UI with mock data
+            const fields = document.querySelectorAll(".info-table td:nth-child(2)");
+            fields[0].textContent = mockData.brandName;
+            fields[1].textContent = mockData.genericName;
+            fields[2].textContent = mockData.strength;
+            fields[3].textContent = mockData.form;
+            fields[4].textContent = mockData.dosageInstructions;
+            fields[5].textContent = mockData.prescriptionStatus;
+            fields[6].textContent = `${mockData.manufacturer} - License: ${mockData.licenseNumber}`;
+        }
+    </script>    
+</body>
 </html>
